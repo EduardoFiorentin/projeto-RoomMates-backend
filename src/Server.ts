@@ -19,7 +19,7 @@ export class Server {
     }
 
     private declareRoutes(): void {
-        Routes.declareRoutes(this.app)
+        Routes.declareUserRoutes(this.app)
     }
 
     public start(): void {

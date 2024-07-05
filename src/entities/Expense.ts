@@ -2,7 +2,7 @@ import { Char } from "../utils/types"
 import { uuid } from "uuidv4"
 
 export class Expense {
-    private id: string
+    private readonly id: string
     private operation : Char
     private day : number
     private month : number
