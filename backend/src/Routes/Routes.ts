@@ -20,5 +20,8 @@ export class Routes {
         app.post("/user", (req: Request, res: Response) => {
             createUserController.handle(req, res)
         })
+        app.get("/user", (req: Request, res: Response) => {
+            res.status(200).json({tudo: "Ok"})
+        })
     }
 }
