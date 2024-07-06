@@ -1,6 +1,6 @@
-import { User } from "../../../entities/User"
+import { Users } from "../../../entity/Users"
 import { IUsersRepository } from "../../../repositories/UserRepository/IUserRepository"
-import { UserRepository } from "../../../repositories/UserRepository/UserRepository"
+import { UserRepository } from "../../../repositories/UserRepository/implementations/UserRepository"
 import { CreateUserDTO } from "./CreateUserDTO"
 
 class CreateUserUseCase {
@@ -13,7 +13,7 @@ class CreateUserUseCase {
             
             const {name, login, password} = props
             
-            const newUser = new User(name, login, password)
+            const newUser = new Users(name, login, password)
     
             await this.userRepository.createUser(newUser)
         }

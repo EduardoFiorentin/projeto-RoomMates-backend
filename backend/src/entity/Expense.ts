@@ -1,5 +1,6 @@
 import { Char } from "../utils/types"
 import { uuid } from "uuidv4"
+import { Entity, Column, PrimaryColumn } from "typeorm"
 
 export class Expense {
     private readonly id: string

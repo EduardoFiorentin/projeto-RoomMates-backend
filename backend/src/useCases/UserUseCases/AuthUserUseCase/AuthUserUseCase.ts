@@ -1,7 +1,7 @@
-import { User } from "../../../entities/User"
+import { Users } from "../../../entity/Users"
 import { UnauthorizedOperationError } from "../../../exceptions/UnauthorizedOperationError"
 import { IUsersRepository } from "../../../repositories/UserRepository/IUserRepository"
-import { UserRepository } from "../../../repositories/UserRepository/UserRepository"
+import { UserRepository } from "../../../repositories/UserRepository/implementations/UserRepository"
 import { JwtService } from "../../../services/JwtService/JwtService"
 import { IAuthResponsePattern } from "./AuthResponsePattern"
 

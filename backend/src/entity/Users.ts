@@ -1,11 +1,19 @@
 import { uuid } from "uuidv4"
-import { Expense } from "./Expense"
+import { Entity, Column, PrimaryColumn } from "typeorm";
 
-class User {
-    private readonly id: string
-    private name: string
-    private login: string
-    private password: string
+@Entity() 
+export class Users {
+    @PrimaryColumn("uuid")
+    readonly id: string;
+    
+    @Column()
+    name: string;
+
+    @Column()
+    login: string;
+
+    @Column()
+    private password: string;
 
     constructor(name: string, login: string, password: string, id?: string) {
         this.name = name
@@ -25,9 +33,12 @@ class User {
         return this.id
     }
 
+    public getLogin(): string {
+        return this.login
+    }
+
     // validar senha do usuário
     public validatePass(password: string): boolean {
         return password === this.password
     }
 }
-export { User }
