@@ -16,4 +16,9 @@ export class UserRepository implements IUsersRepository {
             throw err
         }
     }
+
+    async findUserByLogin(login: string): Promise<User|null> {
+        if (login == "testelogin") return new User("Teste de login", "testelogin", "senha")
+        else return new User("erro", "erro", "erro")
+    }
 }

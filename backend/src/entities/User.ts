@@ -21,9 +21,13 @@ class User {
         return this.name
     }
 
+    public getId(): string {
+        return this.id
+    }
+
     // validar senha do usuário
     public validatePass(password: string): boolean {
-        return true
+        return password === this.password
     }
 }
 export { User }

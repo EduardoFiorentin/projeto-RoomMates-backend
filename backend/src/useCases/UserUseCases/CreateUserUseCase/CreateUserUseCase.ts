@@ -1,10 +1,11 @@
 import { User } from "../../../entities/User"
+import { IUsersRepository } from "../../../repositories/UserRepository/IUserRepository"
 import { UserRepository } from "../../../repositories/UserRepository/UserRepository"
 import { CreateUserDTO } from "./CreateUserDTO"
 
 class CreateUserUseCase {
     constructor(
-        private userRepository: UserRepository
+        private userRepository: IUsersRepository
     ){}
     
     async execute(props: CreateUserDTO): Promise<void> {        
