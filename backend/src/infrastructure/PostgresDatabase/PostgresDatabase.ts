@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import dotenv from 'dotenv'
+import { InternalError } from '../../exceptions/InternalError';
 
 
 dotenv.config()
@@ -38,7 +39,7 @@ export class PostgresDatabase {
         })
         .catch(err => {
             console.log(":/ Falha na conexão - postgres")
-            throw err
+            throw new InternalError("Falha na conexão com postgres - ERR: "+err)
         })
     }
 
