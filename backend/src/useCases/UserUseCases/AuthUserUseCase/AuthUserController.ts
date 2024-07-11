@@ -12,11 +12,7 @@ export class AuthUserController {
     async handle(req: Request, res: Response) {
         const { login, password } = req.body
         try {
-            // verificar informações 
-            if (!login || !password) {
-                throw new ValidationError("Todas as informações são obrigatorias")
-            }
-
+            
             const response: IAuthResponsePattern = await this.authUserUseCase.execute(login, password)
 
             return res.status(201).json({

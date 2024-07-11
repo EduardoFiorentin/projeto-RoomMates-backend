@@ -13,24 +13,10 @@ export class UpdateUserController {
     async handle(req: Request, res: Response) {
         const { name, login, password } = req.body
         const { id } = req.params
-        const token = req.headers['authorization']
+        const token = req.headers['authorization'] || ''
         try {
 
-            console.log(token)
-
-            // verificar autorização 
-            if (token == undefined || !JwtService.getInstance().validateToken(token)) throw new UnauthorizedOperationError("Token JWT inválido")
-
-            // verificar informações 
-            if (!id) {
-                throw new ValidationError("Id do usuário é obrigatório")
-            }
-
-            if (!name && !login && !password) {
-                throw new ValidationError("Pelo menos uma modificação é necessária para esta operação")
-            }
-
-            await this.updateUserUseCase.execute({id, name, login, password})
+            await this.updateUserUseCase.execute({id, token, name, login, password})
 
             return res.status(201).json({
                 statusCode: 201,

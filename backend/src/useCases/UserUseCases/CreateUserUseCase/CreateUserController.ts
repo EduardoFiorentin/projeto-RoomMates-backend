@@ -11,10 +11,7 @@ export class CreateUserController {
     async handle(req: Request, res: Response) {
         const { name, login, password } = req.body
         try {
-            // verificar informações 
-            if (!name || !login || !password) {
-                throw new ValidationError("Todas as informações são obrigatorias")
-            }
+            
 
             await this.createUserUseCase.execute({name, login, password})
 

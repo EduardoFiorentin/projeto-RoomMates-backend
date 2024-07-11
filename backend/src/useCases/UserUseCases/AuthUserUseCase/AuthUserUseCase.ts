@@ -1,5 +1,6 @@
 import { Users } from "../../../entity/Users"
 import { UnauthorizedOperationError } from "../../../exceptions/UnauthorizedOperationError"
+import { ValidationError } from "../../../exceptions/ValidationError"
 import { IUsersRepository } from "../../../repositories/UserRepository/IUserRepository"
 import { UserRepository } from "../../../repositories/UserRepository/implementations/UserRepository"
 import { JwtService } from "../../../services/JwtService/JwtService"
@@ -12,6 +13,10 @@ export class AuthUserUseCase {
     
     async execute(login: string, password: string): Promise<IAuthResponsePattern> {        
         try {
+
+            if (!login || !password) {
+                throw new ValidationError("Todas as informações são obrigatorias")
+            }
             
             const user = await this.userRepository.findUserByLogin(login)
 
