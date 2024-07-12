@@ -1,5 +1,5 @@
-import { UserRepository } from "./implementations/UserRepository";
+import { PostgresUserRepository } from "./implementations/PostgresUserRepository";
 
-const userRepository = new UserRepository()
+const userRepository = new PostgresUserRepository()
 
 export { userRepository }

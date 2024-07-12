@@ -22,7 +22,7 @@ export class CreateUserController {
             })
         }
         catch (err) {
-            const errorHandle = ErrorHandler.handleError(err)
+            const errorHandle = ErrorHandler.validationHandleError(err)
 
             return res.status(errorHandle.statusCode).json({
                 statusCode: errorHandle.statusCode,

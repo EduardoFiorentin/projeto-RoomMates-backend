@@ -3,9 +3,10 @@ import { Entity, Column, PrimaryColumn } from "typeorm";
 
 @Entity() 
 export class Users {
+    
     @PrimaryColumn("uuid")
     readonly id: string;
-    
+     
     @Column()
     name: string;
 
@@ -13,7 +14,7 @@ export class Users {
     login: string;
 
     @Column()
-    private password: string;
+    password: string;
 
     constructor(name: string, login: string, password: string, id?: string) {
         this.name = name

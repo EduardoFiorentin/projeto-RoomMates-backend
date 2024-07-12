@@ -1,18 +1,18 @@
-import { Char } from "../utils/types"
 import { uuid } from "uuidv4"
 import { Entity, Column, PrimaryColumn } from "typeorm"
+import { ExOperation } from "../utils/Types/Operation"
 
 export class Expense {
     private readonly id: string
-    private operation : Char
+    private operation : ExOperation
     private day : number
     private month : number
     private year : number
     private value : number // valor do gasto
     private description: string
     
-    setOperation(operation: Char): void { this.operation = operation }
-    getOperation(): Char {return this.operation}
+    setOperation(operation: ExOperation): void { this.operation = operation }
+    getOperation(): ExOperation {return this.operation}
 
     setDay(day: number): void { this.day = day }
     getDay(): number {return this.day}
@@ -29,7 +29,7 @@ export class Expense {
     setDescription(description: string): void { this.description = description }
     getDescription(): string {return this.description}
 
-    constructor (operation: Char, day: number, month: number, year: number, value: number, description: string, id?: string) {
+    constructor (operation: ExOperation, day: number, month: number, year: number, value: number, description: string, id?: string) {
         
         if (!id) {
             this.id = uuid()

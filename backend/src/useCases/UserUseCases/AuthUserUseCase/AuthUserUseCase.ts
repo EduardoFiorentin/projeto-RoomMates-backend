@@ -2,7 +2,7 @@ import { Users } from "../../../entity/Users"
 import { UnauthorizedOperationError } from "../../../exceptions/UnauthorizedOperationError"
 import { ValidationError } from "../../../exceptions/ValidationError"
 import { IUsersRepository } from "../../../repositories/UserRepository/IUserRepository"
-import { UserRepository } from "../../../repositories/UserRepository/implementations/UserRepository"
+import { PostgresUserRepository } from "../../../repositories/UserRepository/implementations/PostgresUserRepository"
 import { JwtService } from "../../../services/JwtService/JwtService"
 import { IAuthResponsePattern } from "./AuthResponsePattern"
 
@@ -41,3 +41,4 @@ export class AuthUserUseCase {
         }
     }   
 }
+ 

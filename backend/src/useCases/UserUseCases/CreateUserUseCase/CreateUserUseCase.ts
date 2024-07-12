@@ -1,7 +1,7 @@
 import { Users } from "../../../entity/Users"
 import { ValidationError } from "../../../exceptions/ValidationError"
 import { IUsersRepository } from "../../../repositories/UserRepository/IUserRepository"
-import { UserRepository } from "../../../repositories/UserRepository/implementations/UserRepository"
+import { PostgresUserRepository } from "../../../repositories/UserRepository/implementations/PostgresUserRepository"
 import { CreateUserRequestPattern } from "./CreateUserRequestPattern"
 
 class CreateUserUseCase {

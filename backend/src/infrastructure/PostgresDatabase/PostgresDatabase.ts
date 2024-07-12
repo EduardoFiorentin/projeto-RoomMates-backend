@@ -1,6 +1,5 @@
 import { DataSource } from 'typeorm';
 import dotenv from 'dotenv'
-import { InternalError } from '../../exceptions/InternalError';
 
 
 dotenv.config()
@@ -22,13 +21,22 @@ export class PostgresDatabase {
         "subscribers":  ["./src/subscriber/**/*.ts"],
     });
 
+    
+
     private constructor() {}
 
     public static async getInstance(): Promise<PostgresDatabase> {
         if (!PostgresDatabase.instance) {
             PostgresDatabase.instance = new PostgresDatabase();
-            await PostgresDatabase.instance.connect();
+
+            try {
+                await PostgresDatabase.instance.connect();
+            }
+            catch(err) {
+                throw err
+            }  
         }
+
         return PostgresDatabase.instance;
     }
 
@@ -38,12 +46,18 @@ export class PostgresDatabase {
             console.log(":/ Conexão estabelecida - Database Postgres")
         })
         .catch(err => {
-            console.log(":/ Falha na conexão - postgres")
-            throw new InternalError("Falha na conexão com postgres - ERR: "+err)
+            console.log("/: Não foi possível se conectar ao postgres. \nErro: "+err.message)
+            process.exit(1)
         })
+
     }
 
     public getConnection(): DataSource {
         return this.connection;
     }
-}
+
+    // testar
+    public closeConnection() {
+        this.connection.destroy()
+    }
+} 

@@ -3,6 +3,7 @@ import { InternalError } from "../exceptions/InternalError";
 import { NotFoundError } from "../exceptions/NotFoundError";
 import { UnauthorizedOperationError } from "../exceptions/UnauthorizedOperationError";
 import { ValidationError } from "../exceptions/ValidationError";
+import { QueryFailedError } from "typeorm";
 
 interface IResponseData {
     message: string, 
@@ -10,7 +11,7 @@ interface IResponseData {
 }
 
 export class ErrorHandler {
-    static handleError(error: any): IResponseData {
+    static validationHandleError(error: any): IResponseData {
         
         if (
             error instanceof InternalError ||
@@ -32,5 +33,15 @@ export class ErrorHandler {
             }
         }
 
+    }
+
+    static queryHandleError(err: QueryFailedError, local: string) {
+        console.log("Erro inesperado em query:" +
+           "\n\tNome: "+ err.name +
+           "\n\tMensagem: "+ err.message +
+           "\n\tQuery: " + err.query + 
+           "\n\tLocal: " + local
+        )
+        return new InternalError()
     }
 }
