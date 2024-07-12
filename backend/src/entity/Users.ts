@@ -1,45 +1,108 @@
 import { uuid } from "uuidv4"
 import { Entity, Column, PrimaryColumn } from "typeorm";
 
+// @Entity() 
+// export class Users {
+
+//     @PrimaryColumn("uuid")
+//     readonly id: string;
+     
+//     @Column()
+//     name: string;
+
+//     @Column()
+//     login: string;
+
+//     @Column()
+//     password: string;
+
+//     constructor(name: string, login: string, password: string, id?: string) {
+//         this.name = name
+//         this.login = login
+//         this.password = password
+            
+//         if (!id) {
+//             this.id = uuid() 
+//         } else this.id = id
+//     }
+
+//     public getName(): string {
+//         return this.name
+//     }
+
+//     public getId(): string {
+//         return this.id
+//     }
+
+//     public getLogin(): string {
+//         return this.login
+//     }
+
+//     // validar senha do usuário
+//     public validatePass(password: string): boolean {
+//         return password === this.password
+//     }
+// }
+
 @Entity() 
 export class Users {
     
-    @PrimaryColumn("uuid")
-    readonly id: string;
+    private _id: string;
      
-    @Column()
-    name: string;
+    private _name: string;
 
-    @Column()
-    login: string;
+    private _login: string;
 
-    @Column()
-    password: string;
+    private _password: string;
 
     constructor(name: string, login: string, password: string, id?: string) {
-        this.name = name
-        this.login = login
-        this.password = password
+        this._name = name
+        this._login = login
+        this._password = password
             
         if (!id) {
-            this.id = uuid() 
-        } else this.id = id
+            this._id = uuid() 
+        } else this._id = id
+    }
+    
+    @Column()
+    public get name(): string {
+        return this._name
     }
 
-    public getName(): string {
-        return this.name
+    public set name(name: string) {
+        this._name = name
     }
 
-    public getId(): string {
-        return this.id
+    @PrimaryColumn("uuid")
+    public get id(): string {
+        return this._id
     }
 
-    public getLogin(): string {
-        return this.login
+    public set id(id: string) {
+        this._id = id
+    }
+
+    @Column()
+    public get login(): string {
+        return this._login
+    }
+
+    public set login(login: string) {
+        this._login = login
+    }
+
+    @Column()
+    public get password() :string {
+        return this._password
+    }
+
+    public set password(password: string) {
+        this._password = password
     }
 
     // validar senha do usuário
     public validatePass(password: string): boolean {
-        return password === this.password
+        return password === this._password
     }
 }

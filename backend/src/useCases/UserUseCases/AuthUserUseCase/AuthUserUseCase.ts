@@ -26,13 +26,13 @@ export class AuthUserUseCase {
             ) throw new UnauthorizedOperationError("Login ou senha incorretos!")
 
             const token = JwtService.getInstance().generateToken({
-                id: user.getId(),
-                name: user.getName() 
+                id: user.id,
+                name: user.name
             })
 
             return {
-                id: user.getId(),
-                name: user.getName(),
+                id: user.id,
+                name: user.name,
                 token: token
             }
         }

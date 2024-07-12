@@ -50,7 +50,7 @@ export class PostgresUserRepository implements IUsersRepository {
         }
         catch(err) {
             if (err instanceof QueryFailedError) {
-                throw ErrorHandler.queryHandleError(err, "Repositório users - findUserByLogin")
+                throw ErrorHandler.queryHandleError(err, "Repositório users - findUserById")
             }
             else 
                 return null
@@ -65,7 +65,7 @@ export class PostgresUserRepository implements IUsersRepository {
         } 
         catch(err) {
             if (err instanceof QueryFailedError) {
-                throw ErrorHandler.queryHandleError(err, "Repositório users - findUserByLogin")
+                throw ErrorHandler.queryHandleError(err, "Repositório users - createUser")
             }
             else 
                 throw new InternalError("Não foi possível cadastrar usuário! Tente novamente mais tarde")
@@ -102,7 +102,7 @@ export class PostgresUserRepository implements IUsersRepository {
         }
         catch(err) {
             if (err instanceof QueryFailedError) {
-                throw ErrorHandler.queryHandleError(err, "Repositório users - findUserByLogin")
+                throw ErrorHandler.queryHandleError(err, "Repositório users - updateUser")
             }
             else 
                 throw new InternalError("Não foi possível realizar alterações! Tente novamente mais tarde!")
