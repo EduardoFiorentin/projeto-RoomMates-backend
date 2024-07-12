@@ -3,10 +3,10 @@ import { CreateUserController } from "../useCases/UserUseCases/CreateUserUseCase
 import { createUserController } from "../useCases/UserUseCases/CreateUserUseCase";
 import { authUserController } from "../useCases/UserUseCases/AuthUserUseCase";
 import { updateUserController } from "../useCases/UserUseCases/UpdateUserUseCase";
+import { expensesRepository } from "../repositories/ExpenseRepository";
 
 export class Routes {
     static declareUserRoutes(app: Application) {
-
         
         // rotas de user 
         app.post("/user", (req: Request, res: Response) => {
@@ -24,5 +24,21 @@ export class Routes {
         app.post("/user/auth", (req: Request, res: Response) => {
             authUserController.handle(req, res)
         })
+
+       
     }
+
+    static declareExpenseRoutes(app: Application) {
+        app.get("/expense", (req: Request, res: Response) => {
+            teste(req, res)
+        })
+    }
+}
+
+async function teste(req: Request, res: Response) {
+    const response = await expensesRepository.findExpenseById("550e8400-e29b-41d4-a716-446655440000")
+    console.log(response)
+
+    if (response) res.status(200).json({res: response})
+    else res.status(400)
 }

@@ -8,7 +8,7 @@ import { IUpdateUserRequestPattern } from "../../../useCases/UserUseCases/Update
 import { UpdateQueryGenerator } from "../../../utils/UpdateQueryGenerator";
 import { ErrorHandler } from "../../../utils/ErrorHandler";
 
-// testar tratamentos de erros no escopo do repositório
+
 
 export class PostgresUserRepository implements IUsersRepository {
 

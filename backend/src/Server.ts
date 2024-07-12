@@ -15,11 +15,11 @@ export class Server {
 
     private config(): void {
         this.app.use(express.json());
-        // Adicione aqui outras configurações do middleware
     }
 
     private declareRoutes(): void {
         Routes.declareUserRoutes(this.app)
+        Routes.declareExpenseRoutes(this.app)
     }
 
     public start(): void {
@@ -27,4 +27,4 @@ export class Server {
             console.log(`Server is running on port ${this.port}`);
         });
     }
-}
+}  
