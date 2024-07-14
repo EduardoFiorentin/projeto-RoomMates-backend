@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv'
 import { InternalError } from '../../exceptions/InternalError';
+import { IPayLoad } from './IPayLoad';
 
 dotenv.config()
+
 
 export class JwtService {
     private static instance: JwtService;
@@ -37,4 +39,22 @@ export class JwtService {
             return false;
         }
     }
-}
+    
+    public getTokenInfo(token: string) {
+        try {
+            const format_token = token && token.split(' ')[1]
+            if (process.env.JWT_SECRET == undefined) throw new InternalError("Falha ao carregar hash jwt")
+
+            const decodedToken: IPayLoad = jwt.verify(format_token, process.env.JWT_SECRET) as IPayLoad;
+
+            console.log(decodedToken);
+            return decodedToken
+            // Aqui você pode acessar as informações do token decodificado
+            // Por exemplo:
+            // const userId = decodedToken.sub; // para acessar o subject (subject é comumente usado para armazenar o ID do usuário)
+            // const userName = decodedToken.name; // para acessar o nome do usuário, se estiver presente no token
+        } catch (err) {
+            throw err
+        }
+    }
+} 

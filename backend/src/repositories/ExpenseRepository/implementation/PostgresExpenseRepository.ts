@@ -49,4 +49,14 @@ export class PostgresExpenseRepository implements IExpenseRepository {
     async createExpense(expense: Expenses): Promise<void> {
         
     }
+
+    async getExpensesByUser(userId: string): Promise<Expenses[]|null> {
+        try {
+            const expenses = await this.expenseRepository.find({where: {owner_id: userId}})
+            return expenses
+        }
+        catch(err) {
+            throw err
+        }
+    }
 }
