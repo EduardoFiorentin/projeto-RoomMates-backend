@@ -16,7 +16,7 @@ class CreateUserUseCase {
             
             // verificar informações 
             if (!name || !login || !password) {
-                throw new ValidationError("Todas as informações são obrigatorias")
+                throw new ValidationError("Todas as informações são obrigatorias!")
             }
 
             const newUser = new Users(name, login, password)

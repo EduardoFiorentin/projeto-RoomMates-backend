@@ -5,6 +5,7 @@ import { authUserController } from "../useCases/UserUseCases/AuthUserUseCase";
 import { updateUserController } from "../useCases/UserUseCases/UpdateUserUseCase";
 import { expensesRepository } from "../repositories/ExpenseRepository";
 import { getExpenseByUserController } from "../useCases/ExpenseUseCases/GetExpensesByUserUseCase";
+import { createExpenseController } from "../useCases/ExpenseUseCases/CreateExpenseUseCase";
 
 export class Routes {
     static declareUserRoutes(app: Application) {
@@ -32,6 +33,9 @@ export class Routes {
     static declareExpenseRoutes(app: Application) {
         app.get("/expense", (req: Request, res: Response) => {
             getExpenseByUserController.handle(req, res)
+        })
+        app.post("/expense", (req: Request, res: Response) => {
+            createExpenseController.handle(req, res)
         })
     }
 }

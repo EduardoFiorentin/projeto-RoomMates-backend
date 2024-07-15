@@ -9,8 +9,8 @@ export class CreateUserController {
     ){}
 
     async handle(req: Request, res: Response) {
-        const { name, login, password } = req.body
         try {
+            const { name, login, password } = req.body
             
 
             await this.createUserUseCase.execute({name, login, password})

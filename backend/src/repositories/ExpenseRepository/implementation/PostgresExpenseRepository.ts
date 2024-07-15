@@ -47,7 +47,14 @@ export class PostgresExpenseRepository implements IExpenseRepository {
     }
     
     async createExpense(expense: Expenses): Promise<void> {
-        
+        try {
+
+            await this.expenseRepository.save(expense)
+
+        }
+        catch(err) {
+            throw err
+        }
     }
 
     async getExpensesByUser(userId: string): Promise<Expenses[]|null> {
