@@ -1,8 +1,11 @@
-import { DataSource, Repository } from "typeorm";
+import { DataSource, QueryFailedError, Repository } from "typeorm";
 import { Expenses } from "../../../entity/Expense";
 import { IExpenseRepository } from "../IExpenseRepository";
 import { InternalError } from "../../../exceptions/InternalError";
 import { PostgresDatabase } from "../../../infrastructure/PostgresDatabase/PostgresDatabase";
+import { NotFoundError } from "../../../exceptions/NotFoundError";
+import { UnauthorizedOperationError } from "../../../exceptions/UnauthorizedOperationError";
+import { ErrorHandler } from "../../../utils/ErrorHandler";
 
 export class PostgresExpenseRepository implements IExpenseRepository {
     private connection!: DataSource;
@@ -41,8 +44,11 @@ export class PostgresExpenseRepository implements IExpenseRepository {
             return expense
         }
         catch(err) {
-            console.log("Erro no expense:::::\n"+err)
-            return null
+            if (err instanceof QueryFailedError) {
+                throw ErrorHandler.queryHandleError(err, "Repositório expenses - updateUser")
+            }
+            else 
+                throw new InternalError("Não foi possível realizar alterações! Tente novamente mais tarde!")
         }
     }
     
@@ -53,7 +59,11 @@ export class PostgresExpenseRepository implements IExpenseRepository {
 
         }
         catch(err) {
-            throw err
+            if (err instanceof QueryFailedError) {
+                throw ErrorHandler.queryHandleError(err, "Repositório expenses - create")
+            }
+            else 
+                throw new InternalError("Não foi possível realizar alterações! Tente novamente mais tarde!")
         }
     }
 
@@ -63,7 +73,25 @@ export class PostgresExpenseRepository implements IExpenseRepository {
             return expenses
         }
         catch(err) {
-            throw err
+            if (err instanceof QueryFailedError) {
+                throw ErrorHandler.queryHandleError(err, "Repositório expenses - getByUser")
+            }
+            else 
+                throw new InternalError("Não foi possível realizar alterações! Tente novamente mais tarde!")
+        }
+    }
+
+    async deleteExpense(expenseId: string, userId: string): Promise<void> {
+        try {
+            const deleted = await this.expenseRepository.query("DELETE FROM expenses WHERE id = $1 AND owner_id = $2", [expenseId, userId])
+            if (deleted[1] == 0) throw new UnauthorizedOperationError("Usuário não tem permissão para efetuar esta operação!")
+        }
+        catch(err) {
+            if (err instanceof QueryFailedError) {
+                throw ErrorHandler.queryHandleError(err, "Repositório expenses - delete")
+            }
+            else 
+                throw new InternalError("Não foi possível realizar alterações! Tente novamente mais tarde!")
         }
     }
 }

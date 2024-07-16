@@ -6,6 +6,7 @@ import { updateUserController } from "../useCases/UserUseCases/UpdateUserUseCase
 import { expensesRepository } from "../repositories/ExpenseRepository";
 import { getExpenseByUserController } from "../useCases/ExpenseUseCases/GetExpensesByUserUseCase";
 import { createExpenseController } from "../useCases/ExpenseUseCases/CreateExpenseUseCase";
+import { deleteExpenseController } from "../useCases/ExpenseUseCases/DeleteExpenseUseCase";
 
 export class Routes {
     static declareUserRoutes(app: Application) {
@@ -36,6 +37,9 @@ export class Routes {
         })
         app.post("/expense", (req: Request, res: Response) => {
             createExpenseController.handle(req, res)
+        })
+        app.delete("/expense/:id", (req: Request, res: Response) => {
+            deleteExpenseController.handle(req, res)
         })
     }
 }
