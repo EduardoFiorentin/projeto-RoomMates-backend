@@ -7,6 +7,7 @@ import { expensesRepository } from "../repositories/ExpenseRepository";
 import { getExpenseByUserController } from "../useCases/ExpenseUseCases/GetExpensesByUserUseCase";
 import { createExpenseController } from "../useCases/ExpenseUseCases/CreateExpenseUseCase";
 import { deleteExpenseController } from "../useCases/ExpenseUseCases/DeleteExpenseUseCase";
+import { getRoomByOwnerIdController } from "../useCases/RoomUseCases/GetRoomByOwnerIdUseCase";
 
 export class Routes {
     static declareUserRoutes(app: Application) {
@@ -40,6 +41,10 @@ export class Routes {
         })
         app.delete("/expense/:id", (req: Request, res: Response) => {
             deleteExpenseController.handle(req, res)
+        })
+
+        app.get("/room", (req: Request, res: Response) => {
+            getRoomByOwnerIdController.handle(req, res)
         })
     }
 }

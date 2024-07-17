@@ -94,4 +94,18 @@ export class PostgresExpenseRepository implements IExpenseRepository {
                 throw new InternalError("Não foi possível realizar alterações! Tente novamente mais tarde!")
         }
     }
+
+    async getExpensesByOwnerId(owner_id: string): Promise<Expenses[]> {
+        try {
+            const expenses = this.expenseRepository.find({where: {owner_id}})
+            return expenses
+        }
+        catch(err) {
+            if (err instanceof QueryFailedError) {
+                throw ErrorHandler.queryHandleError(err, "Repositório expenses - getExpensesByOwnerId")
+            }
+            else 
+                throw new InternalError("Não foi possível realizar alterações! Tente novamente mais tarde!")
+        }
+    }
 }
