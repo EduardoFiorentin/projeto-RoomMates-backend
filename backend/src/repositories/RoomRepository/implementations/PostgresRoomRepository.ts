@@ -49,6 +49,7 @@ export class PostgresRoomRepository implements IRoomRepository {
     async getRoomById(id: string): Promise<Room | null> {
         try {
             const room = await this.roomRepository.findOneBy({id})
+            console.log(room)
             return room
         }
         catch(err) {
@@ -65,7 +66,7 @@ export class PostgresRoomRepository implements IRoomRepository {
             const room = await this.roomRepository.findOneBy({owner_id})
             return room
         }
-        catch(err) {
+        catch(err) { 
             return null
         }
     }

@@ -46,7 +46,7 @@ export class PostgresDatabase {
             console.log(":/ Conexão estabelecida - Database Postgres")
         })
         .catch(err => {
-            console.log("/: Não foi possível se conectar ao postgres. \nErro: "+err.message)
+            console.log("/: Não foi possível se conectar ao postgres. \nErro: "+err)
             process.exit(1)
         })
 

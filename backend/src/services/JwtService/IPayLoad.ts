@@ -2,6 +2,7 @@
 export interface IPayLoad {
     id: string,
     name: string,
+    room: string|null,
     iat?: number,
     exp?: number
 }

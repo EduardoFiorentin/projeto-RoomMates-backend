@@ -19,10 +19,10 @@ class CreateUserUseCase {
                 throw new ValidationError("Todas as informações são obrigatorias!")
             }
 
-            const newUser = new Users(name, login, password)
+            const newUser = new Users(name, login, password, null)
     
             await this.userRepository.createUser(newUser)
-        }
+        }  
         catch (err) {
             throw err
         }

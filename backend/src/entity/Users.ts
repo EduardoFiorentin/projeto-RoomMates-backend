@@ -55,10 +55,13 @@ export class Users {
 
     private _password: string;
 
-    constructor(name: string, login: string, password: string, id?: string) {
+    private _room_id: string|null;
+
+    constructor(name: string, login: string, password: string, room_id: string|null, id?: string) {
         this._name = name
         this._login = login
         this._password = password
+        this._room_id = room_id
             
         if (!id) {
             this._id = uuid() 
@@ -99,6 +102,15 @@ export class Users {
 
     public set password(password: string) {
         this._password = password
+    }
+
+    @Column({type: "varchar", nullable: true})
+    public get room_id(): string|null {
+        return this._room_id
+    }
+
+    public set room_id(room_id: string|null) {
+        this._room_id = room_id
     }
 
     // validar senha do usuário

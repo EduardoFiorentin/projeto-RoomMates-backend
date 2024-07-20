@@ -7,7 +7,8 @@ export interface IUsersRepository {
     createUser(user: Users): Promise<void>,
     findUserByLogin(login: string): Promise<Users|null>
     findUserById(id: string): Promise<Users|null>
-    updateUser(props: IUpdateUserRequestPattern): Promise<void>
+    updateUser(props: IUpdateUserRequestPattern): Promise<void>,
+    setRoom(user_id: string, room_id: string): Promise<void>
     //updateUser(modObj: IUpdateUserRequestDTO): Promise<boolean>,
     //deleteUser(id: string): Promise<boolean>,
     //auth(login: string, password: string): Promise<User>

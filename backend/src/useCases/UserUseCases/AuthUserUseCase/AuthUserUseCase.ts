@@ -4,6 +4,7 @@ import { ValidationError } from "../../../exceptions/ValidationError"
 import { IUsersRepository } from "../../../repositories/UserRepository/IUserRepository"
 import { PostgresUserRepository } from "../../../repositories/UserRepository/implementations/PostgresUserRepository"
 import { JwtService } from "../../../services/JwtService/JwtService"
+import { getRoomByIdUseCase } from "../../RoomUseCases/GetRoomByIdUseCase"
 import { getRoomByOwnerIdUseCase } from "../../RoomUseCases/GetRoomByOwnerIdUseCase"
 import { GetRoomByOwnerUseCase } from "../../RoomUseCases/GetRoomByOwnerIdUseCase/GetRoomByOwnerUseCase"
 import { IAuthResponsePattern } from "./AuthResponsePattern"
@@ -29,12 +30,15 @@ export class AuthUserUseCase {
 
             const token = JwtService.getInstance().generateToken({
                 id: user.id,
-                name: user.name
+                name: user.name,
+                room: user.room_id
             })
+            
+            console.log("room id: ", user.room_id)
 
-            const room = await getRoomByOwnerIdUseCase.execute(user.id)
+            const room = user.room_id ? await getRoomByIdUseCase.execute(user.room_id) : null
 
-            return {
+            return {  
                 id: user.id,
                 name: user.name,
                 token: token,

@@ -93,7 +93,6 @@ export class PostgresUserRepository implements IUsersRepository {
         try {
 
             const query: string | null = UpdateQueryGenerator.updateUserQuery(props)
-            console.log(query)
 
             if (query !== null) {
                 await this.userRepository.query(query, [])
@@ -108,5 +107,17 @@ export class PostgresUserRepository implements IUsersRepository {
                 throw new InternalError("Não foi possível realizar alterações! Tente novamente mais tarde!")
         }
     }
-}
 
+    async setRoom(user_id: string, room_id: string): Promise<void> {
+        try {
+            await this.userRepository.query(`UPDATE users SET room_id = ${room_id} WHERE id = ${user_id}`, [])
+        }
+        catch(err) {
+            if (err instanceof QueryFailedError) {
+                throw ErrorHandler.queryHandleError(err, "Repositório users - setRoom")
+            }
+            else 
+                throw new InternalError("Não foi possível realizar alterações! Tente novamente mais tarde!")
+        }   
+    }
+}
