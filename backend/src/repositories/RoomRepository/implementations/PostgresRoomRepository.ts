@@ -39,7 +39,11 @@ export class PostgresRoomRepository implements IRoomRepository {
     }
 
     async createRoom(new_room: Room): Promise<void> {
-        
+        try {
+            await this.roomRepository.save(new_room)
+        } catch (err) {
+            throw err
+        }
     }
 
     async getRoomById(id: string): Promise<Room | null> {
@@ -48,7 +52,6 @@ export class PostgresRoomRepository implements IRoomRepository {
             return room
         }
         catch(err) {
-            console.log("Erro aqui: ", err)
             return null
         }
     }
@@ -63,7 +66,6 @@ export class PostgresRoomRepository implements IRoomRepository {
             return room
         }
         catch(err) {
-            console.log(err)
             return null
         }
     }

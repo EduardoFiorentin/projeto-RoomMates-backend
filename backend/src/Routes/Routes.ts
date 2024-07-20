@@ -8,6 +8,7 @@ import { getExpenseByUserController } from "../useCases/ExpenseUseCases/GetExpen
 import { createExpenseController } from "../useCases/ExpenseUseCases/CreateExpenseUseCase";
 import { deleteExpenseController } from "../useCases/ExpenseUseCases/DeleteExpenseUseCase";
 import { getRoomByOwnerIdController } from "../useCases/RoomUseCases/GetRoomByOwnerIdUseCase";
+import { createRoomController } from "../useCases/RoomUseCases/CreateRoomUseCase";
 
 export class Routes {
     static declareUserRoutes(app: Application) {
@@ -43,16 +44,14 @@ export class Routes {
             deleteExpenseController.handle(req, res)
         })
 
-        app.get("/room", (req: Request, res: Response) => {
-            getRoomByOwnerIdController.handle(req, res)
+        // app.get("/room", (req: Request, res: Response) => {
+        //     getRoomByOwnerIdController.handle(req, res)
+        // })
+    }
+
+    static declareRoomRoutes(app: Application) {
+        app.post("/room", (req: Request, res: Response) => {
+            createRoomController.handle(req, res)
         })
     }
-}
-
-async function teste(req: Request, res: Response) {
-    const response = await expensesRepository.findExpenseById("550e8400-e29b-41d4-a716-446655440000")
-    console.log(response)
-
-    if (response) res.status(200).json({res: response})
-    else res.status(400)
 }

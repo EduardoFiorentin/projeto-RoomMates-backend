@@ -1,5 +1,8 @@
+import { Room } from "../../../entity/Room";
+
 export interface IAuthResponsePattern {
     id: string, 
     name: string,
-    token: string
+    token: string,
+    room: Room | null
 }

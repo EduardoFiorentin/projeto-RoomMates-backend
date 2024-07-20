@@ -4,6 +4,8 @@ import { ValidationError } from "../../../exceptions/ValidationError"
 import { IUsersRepository } from "../../../repositories/UserRepository/IUserRepository"
 import { PostgresUserRepository } from "../../../repositories/UserRepository/implementations/PostgresUserRepository"
 import { JwtService } from "../../../services/JwtService/JwtService"
+import { getRoomByOwnerIdUseCase } from "../../RoomUseCases/GetRoomByOwnerIdUseCase"
+import { GetRoomByOwnerUseCase } from "../../RoomUseCases/GetRoomByOwnerIdUseCase/GetRoomByOwnerUseCase"
 import { IAuthResponsePattern } from "./AuthResponsePattern"
 
 export class AuthUserUseCase {
@@ -30,10 +32,13 @@ export class AuthUserUseCase {
                 name: user.name
             })
 
+            const room = await getRoomByOwnerIdUseCase.execute(user.id)
+
             return {
                 id: user.id,
                 name: user.name,
-                token: token
+                token: token,
+                room: room
             }
         }
         catch (err) {
