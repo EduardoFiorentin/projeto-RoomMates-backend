@@ -19,6 +19,10 @@ class CreateUserUseCase {
                 throw new ValidationError("Todas as informações são obrigatorias!")
             }
 
+            // adicionar verificações adicionais 
+                // login já cadastrado
+                // força da senha  
+
             const newUser = new Users(name, login, password, null)
     
             await this.userRepository.createUser(newUser)

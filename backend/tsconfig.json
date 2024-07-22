@@ -8,6 +8,7 @@
       "emitDecoratorMetadata": true,
       "skipLibCheck": true,
       "outDir": "./dist",
+      "resolveJsonModule": true
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules"]

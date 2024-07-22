@@ -1,3 +1,4 @@
+import { Room } from "../../../entity/Room"
 import { Users } from "../../../entity/Users"
 import { UnauthorizedOperationError } from "../../../exceptions/UnauthorizedOperationError"
 import { ValidationError } from "../../../exceptions/ValidationError"
@@ -34,15 +35,20 @@ export class AuthUserUseCase {
                 room: user.room_id
             })
             
-            console.log("room id: ", user.room_id)
 
             const room = user.room_id ? await getRoomByIdUseCase.execute(user.room_id) : null
+            const response_room = room ? {
+                id: room.id, 
+                owner_id: room.owner_id,
+                name: room.name,
+                members_num: room.members_num
+            } as Room : null
 
             return {  
                 id: user.id,
                 name: user.name,
                 token: token,
-                room: room
+                room: response_room
             }
         }
         catch (err) {

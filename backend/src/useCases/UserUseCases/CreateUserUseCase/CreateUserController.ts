@@ -28,7 +28,7 @@ export class CreateUserController {
                 statusCode: errorHandle.statusCode,
                 message: errorHandle.message,
                 data: []
-            })
+            }) 
         }       
     }
-}
+}  

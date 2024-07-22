@@ -10,6 +10,12 @@ import { deleteExpenseController } from "../useCases/ExpenseUseCases/DeleteExpen
 import { getRoomByOwnerIdController } from "../useCases/RoomUseCases/GetRoomByOwnerIdUseCase";
 import { createRoomController } from "../useCases/RoomUseCases/CreateRoomUseCase";
 
+// 500 - internal error
+// 404 - not found
+// 401 - não autorizado
+// 400 - validationError
+
+
 export class Routes {
     static declareUserRoutes(app: Application) {
         
@@ -23,7 +29,7 @@ export class Routes {
         app.put("/user/:id", (req: Request, res: Response) => {
             updateUserController.handle(req, res)
         })
-
+  
 
         // autenticação 
         app.post("/user/auth", (req: Request, res: Response) => {

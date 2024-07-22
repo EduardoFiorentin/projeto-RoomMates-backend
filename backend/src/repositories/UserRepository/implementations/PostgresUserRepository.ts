@@ -66,26 +66,26 @@ export class PostgresUserRepository implements IUsersRepository {
         catch(err) {
             if (err instanceof QueryFailedError) {
                 throw ErrorHandler.queryHandleError(err, "Repositório users - createUser")
-            }
-            else 
+            } 
+            else  
                 throw new InternalError("Não foi possível cadastrar usuário! Tente novamente mais tarde")
-        }
+        } 
     }
 
     async findUserByLogin(login: string): Promise<Users|null> {
         try {
             const user = await this.userRepository.findOneBy({ login })
     
-            if (user == null) throw new NotFoundError("Usuário não encontrado!")
+            // if (user == null) throw new NotFoundError("Usuário não encontrado!")
     
             return user
-        } 
+        }  
         catch(err) {
             if (err instanceof QueryFailedError) {
                 throw ErrorHandler.queryHandleError(err, "Repositório users - findUserByLogin")
             }
             else 
-                throw err
+                throw err 
         }
     }
 

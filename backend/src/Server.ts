@@ -1,5 +1,7 @@
 import express, { Application } from 'express';
 import { Routes } from './Routes/Routes';
+import swaggerUi from 'swagger-ui-express'
+import swaggerDocs from "./docs/swagger.json"
 
 export class Server {
     private app: Application;
@@ -14,14 +16,15 @@ export class Server {
     }
 
     private config(): void {
-        this.app.use(express.json());
+        this.app.use(express.json());  
+        this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
     }
 
     private declareRoutes(): void {
         Routes.declareUserRoutes(this.app)
         Routes.declareExpenseRoutes(this.app)
         Routes.declareRoomRoutes(this.app)
-    }
+    }    
 
     public start(): void {
         this.app.listen(this.port, () => {

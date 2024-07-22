@@ -1,0 +1,304 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "RoomMates API",
+        "description": "API responsável pela distribuição de dados para a aplicação RoomMates. Quem usar para outras coisas é gay.",
+        "version": "1.0.0"
+    }, 
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "API de desenvolvimento."
+        }
+    ],
+
+    "paths": {
+
+        "/user/auth": {
+            "post": {
+                "summary": "Autenticação de usuários",
+                "description": "Rota de entrada para o sistema. Através dela o usuário obtém seu token de acesso, bem como informações básicas necessárias para renderização do sistema.",
+                "tags": ["Auth"],
+                "security": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthRequest"
+                            },
+                            "examples": {
+                                "auth": {
+                                    "value": {
+                                        "login": "breno.ss",
+                                        "password": "breninho.mg"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Login efetuado com sucesso!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/AuthResponse201"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Todas as informações são obrigatorias"
+                    }, 
+                    "401": {
+                        "description": "Login ou senha incorretos!"
+                    },
+                    "500": {
+                        "description": "Um erro inesperado ocorreu! Tente novamente mais tarde!"
+                    }
+                }
+            }
+        },
+
+        "/user": {
+            "post": {
+                "summary": "Criação de usuários",
+                "description": "Rota de cadastro para novos usuários.",
+                "tags": ["User"],
+                "security": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUserRequest"
+                            },
+                            "examples": {
+                                "auth": {
+                                    "value": {
+                                        "name":"breno soares alves",
+                                        "login":"breno.ss",
+                                        "password": "breninho.mg"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Todas as informações são obrigatorias"
+                    }, 
+                    "500": {
+                        "description": "Um erro inesperado ocorreu! Tente novamente mais tarde!"
+                    }
+                }
+            }
+        },
+
+        "/user/{id}": {
+
+            "put": {
+                "summary": "Update de usuários",
+                "description": "Rota de alteração de informações de usuário",
+                "tags": ["User"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserRequest"
+                            },
+                            "examples": {
+                                "auth": {
+                                    "value": {
+                                        "name":"nome sobrenome",
+                                        "login":"login",
+                                        "password": "senha"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Login efetuado com sucesso!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Todas as informações são obrigatorias"
+                    }, 
+                    "500": {
+                        "description": "Um erro inesperado ocorreu! Tente novamente mais tarde!"
+                    }
+                }
+            }
+            
+        },
+
+
+        "/expense": {
+            "get": {},
+            "post": {},
+            "delete": {}
+        }, 
+
+
+        "/room": {
+            "post": {}
+        }
+        
+    },
+
+
+    "components": {
+        "schemas": {
+
+            "AuthRequest": {
+                "type": "object",
+                "properties": {
+                    "login": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+
+            "CreateUserRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "login": {
+                        "type": "string"
+                    },
+                    "passoword": {
+                        "type": "string"
+                    }
+                }
+            },
+
+            "UpdateUserRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "required": false
+                    },
+                    "login": {
+                        "type": "string",
+                        "required": false
+                    },
+                    "passoword": {
+                        "type": "string",
+                        "required": false
+                    }
+                }
+            },
+
+
+            "AuthResponse201": {
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "number"
+                    }, 
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "token": {
+                                "type": "string"
+                            },
+                            "room": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Room"
+                            }
+                        }   
+                    }
+                }
+            },
+
+
+
+            "Room": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }, 
+                    "owner_id": {
+                        "type": "string"
+                    }, 
+                    "name": {
+                        "type": "string"
+                    },
+                    "members_num": {
+                        "type": "number"
+                    }
+                }
+            }
+
+        },
+
+
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+
+    }
+
+
+}
+
+
+
+
+
