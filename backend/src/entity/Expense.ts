@@ -1,6 +1,6 @@
     import { uuid } from "uuidv4"
     import { Entity, Column, PrimaryColumn } from "typeorm"
-    import { ExOperation } from "../utils/Types/Operation"
+    import { ExOperation } from "../Types/Operation"
 
     // iniciar implementação dos use cases 
 

@@ -7,6 +7,7 @@ import { describe } from "node:test"
 interface IExpenseResponse {
     id: string,
     operation: string,
+    owner_id: string,
     date: Date,
     value: number,
     description: string
@@ -28,7 +29,8 @@ export class GetExpenseByUserController {
                 let format_expenses: IExpenseResponse[] = []
                 expenses.map((item) => {
                     format_expenses.push({
-                        id: item.id,
+                        id: item.id,  
+                        owner_id: item.owner_id, 
                         operation: item.operation,
                         date: item.date,
                         value: item.value,
@@ -46,10 +48,10 @@ export class GetExpenseByUserController {
             return res.status(201).json({
                 statusCode: 201,
                 message: "Não há registros cadastrados!",
-                data: null
+                data: []
             })
         }
-        catch (err) {
+        catch (err) {  
             const errorHandle = ErrorHandler.validationHandleError(err)
 
             return res.status(errorHandle.statusCode).json({

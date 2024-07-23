@@ -18,9 +18,7 @@ export class CreateRoomController {
             return res.status(201).json({
                 statusCode: 201,
                 message: "Registro criado com sucesso!",
-                data: {
-                    
-                }
+                data: new_room
             })
         }
         catch (err) {

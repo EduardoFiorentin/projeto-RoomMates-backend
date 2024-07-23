@@ -1,4 +1,4 @@
-import { ExOperation } from "../../../utils/Types/Operation";
+import { ExOperation } from "../../../Types/Operation";
 
 export interface ICreateExpenseRequertPattern {
     token: string,

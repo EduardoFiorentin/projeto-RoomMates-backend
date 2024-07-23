@@ -30,7 +30,7 @@ export class UpdateUserController {
             return res.status(errorHandle.statusCode).json({
                 statusCode: errorHandle.statusCode,
                 message: errorHandle.message, 
-                data: []  
+                data: []   
             }) 
         }       
     }

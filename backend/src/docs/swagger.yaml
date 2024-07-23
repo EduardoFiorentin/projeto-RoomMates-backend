@@ -1,0 +1,323 @@
+openapi: 3.0.0
+info:
+  title: RoomMates API
+  description: API responsável pela distribuição de dados para a aplicação RoomMates. Quem usar para outras coisas é gay.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: API de desenvolvimento.
+paths:
+  /user/auth:
+    post:
+      summary: Autenticação de usuários
+      description: Rota de entrada para o sistema. Através dela o usuário obtém seu token de acesso, bem como informações básicas necessárias para renderização do sistema.
+      tags:
+        - Auth
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+            examples:
+              auth:
+                value:
+                  login: breno.ss
+                  password: breninho.mg
+      responses:
+        '201':
+          description: Login efetuado com sucesso!
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/AuthResponse201'
+        '400':
+          description: Todas as informações são obrigatorias
+        '401':
+          description: Login ou senha incorretos!
+        '500':
+          description: Um erro inesperado ocorreu! Tente novamente mais tarde!
+  /user:
+    post:
+      summary: Criação de usuários
+      description: Rota de cadastro para novos usuários.
+      tags:
+        - User
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+            examples:
+              auth:
+                value:
+                  name: breno soares alves
+                  login: breno.ss
+                  password: breninho.mg
+      responses:
+        '201':
+          description: Usuário criado com sucesso!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+        '400':
+          description: Todas as informações são obrigatorias
+        '500':
+          description: Um erro inesperado ocorreu! Tente novamente mais tarde!
+  /user/{id}:
+    put:
+      summary: Update de usuários
+      description: Rota de alteração de informações de usuário
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id do usuário modificado
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+            examples:
+              auth:
+                value:
+                  name: nome sobrenome
+                  login: login
+                  password: senha
+      responses:
+        '201':
+          description: Login efetuado com sucesso!
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Todas as informações são obrigatorias
+        '401':
+          description: Token JWT inválido
+        '500':
+          description: Um erro inesperado ocorreu! Tente novamente mais tarde!
+  /expense:
+    get:
+      summary: Retorna gastos do usuário
+      description: Retorna os gastos do usuário. Identifica o usuário através do token JWT
+      tags:
+        - Expense
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Operação realizada com sucesso!
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/getExpensesByUserResponse201'
+        '401':
+          description: Token JWT inválido
+        '500':
+          description: Um erro inesperado ocorreu! Tente novamente mais tarde!
+    post: 
+      summary: Cria um novo registro de gasto
+      description: Cria e retorna um novo gasto. Pode ser cadastrado para pertencer a um Usuário ou Room.
+      tags: 
+        - Expense
+      security: 
+        - bearerAuth: []
+      responses: 
+        '201':
+          description: 'Registro criado com sucesso!'
+          content: 
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Expenses'
+        
+          
+        '400':
+          description: Todas as informações são obrigatorias
+        '401':
+          description: Token JWT inválido
+        '500':
+          description: Um erro inesperado ocorreu! Tente novamente mais tarde!
+  /expense/{id}:
+    delete: 
+      summary: Deleta um registro de gasto
+      description: Deleta um registro de gasto.
+      tags: 
+        - Expense
+      security: 
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id do usuário modificado
+          required: true
+          schema:
+            type: string
+      responses: 
+        '201':
+          description: Registro deletado com sucesso!
+        '404':
+          description: Registro com id fornecido não foi encontrado
+        '401':
+          description: Token JWT inválido
+        '500':
+          description: Um erro inesperado ocorreu! Tente novamente mais tarde!
+  /room:
+    post: 
+      summary: Cria um novo Room
+      description: Cria e retorna um novo Room. Pode ser criado pelos usuários, com limite de um por usuário. Usuários podem pertencer a um room. 
+      tags: 
+        - Room
+      security: 
+        - bearerAuth: []
+      responses: 
+        '201':
+          description: 'Registro criado com sucesso!'
+          content: 
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Room'
+        
+          
+        '400':
+          description: Todas as informações são obrigatorias
+        '401':
+          description: Token JWT inválido
+          content: 
+            application/json:
+              schema:
+                type: object 
+                properties:
+                  message: 
+                    type: string
+                  statusCode: 
+                    type: number
+              examples: 
+                example1:
+                  summary: Token JWT inválido
+                  
+                example2:
+                  summary: Usuário já possui ou participa de um quarto
+
+        '500':
+          description: Um erro inesperado ocorreu! Tente novamente mais tarde!
+    
+    
+    
+components:
+  schemas:
+    AuthRequest:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+          
+    CreateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        login:
+          type: string
+        passoword:
+          type: string
+          
+    UpdateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        login:
+          type: string
+        passoword:
+          type: string
+          
+    AuthResponse201:
+      type: object
+      properties:
+        statusCode:
+          type: number
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            token:
+              type: string
+            room:
+              type: object
+              $ref: '#/components/schemas/Room'
+              
+    getExpensesByUserResponse201:
+      type: object
+      properties:
+        statusCode:
+          type: number
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Expenses'
+    Room:
+      type: object
+      properties:
+        id:
+          type: string
+        owner_id:
+          type: string
+        name:
+          type: string
+        members_num:
+          type: number
+          
+    Expenses:
+      type: object
+      properties: 
+        id:
+          type: string
+        owner_id: 
+          type: string
+        operation:
+          type: string
+        date:
+          type: string
+        value:
+          type: number
+        description:
+          type: string
+    
+    
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
