@@ -1,7 +1,6 @@
 import express, { Application } from 'express';
 import { Routes } from './Routes/Routes';
 import swaggerUi from 'swagger-ui-express'
-import swaggerDocs from "./docs/swagger.json"
 import YAML from 'yamljs';
 import path from 'path';
 

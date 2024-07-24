@@ -13,7 +13,7 @@ export class CreateRoomController {
 
             const { name, members_num, owner_id} = req.body
 
-            const new_room = await this.createRoomUseCase.execute({ token, name, members_num, owner_id})
+            const new_room = await this.createRoomUseCase.execute({ token, name})
 
             return res.status(201).json({
                 statusCode: 201,

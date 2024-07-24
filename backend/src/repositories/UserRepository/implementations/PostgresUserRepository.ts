@@ -110,7 +110,7 @@ export class PostgresUserRepository implements IUsersRepository {
 
     async setRoom(user_id: string, room_id: string): Promise<void> {
         try {
-            await this.userRepository.query(`UPDATE users SET room_id = ${room_id} WHERE id = ${user_id}`, [])
+            await this.userRepository.query(`UPDATE users SET room_id = '${room_id}' WHERE id = '${user_id}'`, [])
         }
         catch(err) {
             if (err instanceof QueryFailedError) {
