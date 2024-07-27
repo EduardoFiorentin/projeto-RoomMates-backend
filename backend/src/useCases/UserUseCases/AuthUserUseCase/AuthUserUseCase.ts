@@ -33,22 +33,12 @@ export class AuthUserUseCase {
                 id: user.id,
                 name: user.name,
                 room: user.room_id
-            })
-            
-
-            const room = user.room_id ? await getRoomByIdUseCase.execute(user.room_id) : null
-            const response_room = room ? {
-                id: room.id, 
-                owner_id: room.owner_id,
-                name: room.name,
-                members_num: room.members_num
-            } as Room : null
+            })            
 
             return {  
                 id: user.id,
                 name: user.name,
                 token: token,
-                room: response_room
             }
         }
         catch (err) {
