@@ -271,9 +271,8 @@ components:
               type: string
             token:
               type: string
-            room:
-              type: object
-              $ref: '#/components/schemas/Room'
+            room_id:
+              type: string
               
     getExpensesByUserResponse201:
       type: object

@@ -70,4 +70,13 @@ export class PostgresRoomRepository implements IRoomRepository {
             return null
         }
     }
+
+    async updateMembersNum(room_id: string, new_value: string): Promise<void> {
+        try {
+            await this.roomRepository.query(`UPDATE room SET members_num=$1 where id=$2`, [new_value, room_id])
+        }
+        catch(err) { 
+            throw err
+        }
+    }
 }

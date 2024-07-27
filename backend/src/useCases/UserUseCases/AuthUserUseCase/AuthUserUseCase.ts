@@ -1,13 +1,7 @@
-import { Room } from "../../../entity/Room"
-import { Users } from "../../../entity/Users"
 import { UnauthorizedOperationError } from "../../../exceptions/UnauthorizedOperationError"
 import { ValidationError } from "../../../exceptions/ValidationError"
 import { IUsersRepository } from "../../../repositories/UserRepository/IUserRepository"
-import { PostgresUserRepository } from "../../../repositories/UserRepository/implementations/PostgresUserRepository"
 import { JwtService } from "../../../services/JwtService/JwtService"
-import { getRoomByIdUseCase } from "../../RoomUseCases/GetRoomByIdUseCase"
-import { getRoomByOwnerIdUseCase } from "../../RoomUseCases/GetRoomByOwnerIdUseCase"
-import { GetRoomByOwnerUseCase } from "../../RoomUseCases/GetRoomByOwnerIdUseCase/GetRoomByOwnerUseCase"
 import { IAuthResponsePattern } from "./AuthResponsePattern"
 
 export class AuthUserUseCase {
@@ -38,11 +32,12 @@ export class AuthUserUseCase {
             return {  
                 id: user.id,
                 name: user.name,
-                token: token,
+                room_id: user.room_id,
+                token: token
             }
         }
         catch (err) {
-            throw err
+            throw err 
         }
     }   
 }
