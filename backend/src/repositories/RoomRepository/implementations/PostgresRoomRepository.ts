@@ -79,4 +79,14 @@ export class PostgresRoomRepository implements IRoomRepository {
             throw err
         }
     }
+
+    async getRoomByName(room_name: string): Promise<Room | null> {
+        try {
+            const room = await this.roomRepository.findOne({where: {name: room_name}})
+            return room
+        }
+        catch(err) { 
+            throw err
+        }
+    }
 }

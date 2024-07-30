@@ -27,16 +27,16 @@ export class CreateRoomUseCase {
             const { id } = JwtService.getInstance().getTokenInfo(token)
             const user = await getUserByIdUseCase.execute(id)
 
-            if (user?.room_id) throw new UnauthorizedOperationError("Usuário já possui ou participa de um quarto")
-            
-            // a info do token (room) não é atualizada ao criar um room
+            if (user == null) throw new UnauthorizedOperationError("Usuário não encontrado!")
 
+            if (user.room_id) throw new UnauthorizedOperationError("Usuário já possui ou participa de um quarto")
+            
             const members_num = 1
 
             // definir o usuário que criou como pertencente ao room
             
             const new_room = new Room(name, members_num, id)
-            
+              
             await this.roomRepository.createRoom(new_room)
             await setUserRoomUseCase.execute(id, new_room.id)
             
