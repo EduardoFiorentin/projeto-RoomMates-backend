@@ -9,11 +9,11 @@
         private _id: string = '';
         private _owner_id: string = '';
         private _operation: ExOperation = 'i'; // Inicializa com um valor padrão
-        private _date: Date = new Date();
+        private _date: string ;
         private _value: number = 0; // Inicializa com um valor padrão
         private _description: string = '';
 
-        constructor (operation: ExOperation, date: Date, value: number, description: string, owner_id: string, id?: string) {
+        constructor (operation: ExOperation, date: string, value: number, description: string, owner_id: string, id?: string) {
             
             if (!id) {
                 this._id = uuid()
@@ -21,7 +21,7 @@
             else { 
                 this._id = id
             }
-
+ 
             this._operation = operation
             this._value = value
             this._date = date
@@ -42,8 +42,8 @@
         public set owner_id(owner_id: string) { this._owner_id = owner_id }
 
         @Column()
-        public get date(): Date { return this._date }
-        public set date(date: Date) { this._date = date }
+        public get date(): string { return this._date }
+        public set date(date: string) { this._date = date }
     
         @Column()
         public get value(): number {return this._value}

@@ -1,3 +1,4 @@
+import moment from "moment";
 import { Expenses } from "../../../entity/Expense";
 import { UnauthorizedOperationError } from "../../../exceptions/UnauthorizedOperationError";
 import { ValidationError } from "../../../exceptions/ValidationError";
@@ -16,16 +17,17 @@ export class CreateExpenseUseCase {
                 token,
                 owner_id,
                 operation,
-                date,
                 value,
                 description
             } = props
 
             if (token == '' || !JwtService.getInstance().validateToken(token)) throw new UnauthorizedOperationError("Token JWT inválido")
 
-            if (!owner_id || !operation || !date || !value || !description ) throw new ValidationError("Todas as informações são obrigatorias!")
+            if (!owner_id || !operation || !value || !description ) throw new ValidationError("Todas as informações são obrigatorias!")
 
-            const new_expense = new Expenses(operation, date, value, description, owner_id)
+            const formattedDate = moment().format('YYYY-MM-DD HH:mm:ss');
+
+            const new_expense = new Expenses(operation, formattedDate, value, description, owner_id)
 
             await this.expenseRepository.createExpense(new_expense)
 

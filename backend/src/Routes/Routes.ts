@@ -9,6 +9,7 @@ import { createExpenseController } from "../useCases/ExpenseUseCases/CreateExpen
 import { deleteExpenseController } from "../useCases/ExpenseUseCases/DeleteExpenseUseCase";
 import { getRoomByOwnerIdController } from "../useCases/RoomUseCases/GetRoomByOwnerIdUseCase";
 import { createRoomController } from "../useCases/RoomUseCases/CreateRoomUseCase";
+import { registerUserToRoomController } from "../useCases/RoomUseCases/RegisterUserToRoomUseCase";
 
 // 500 - internal error
 // 404 - not found
@@ -59,5 +60,9 @@ export class Routes {
         app.post("/room", (req: Request, res: Response) => {
             createRoomController.handle(req, res)
         })
+
+        app.post("/room/registre", (req: Request, res: Response) => {
+            registerUserToRoomController.handle(req, res)
+        }) 
     }
 }

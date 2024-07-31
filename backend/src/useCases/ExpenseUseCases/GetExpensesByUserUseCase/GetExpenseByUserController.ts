@@ -8,7 +8,7 @@ interface IExpenseResponse {
     id: string,
     operation: string,
     owner_id: string,
-    date: Date,
+    date: string,
     value: number,
     description: string
 }
