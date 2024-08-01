@@ -1,6 +1,7 @@
     import { uuid } from "uuidv4"
-    import { Entity, Column, PrimaryColumn } from "typeorm"
+    import { Entity, Column, PrimaryColumn, ManyToMany, JoinTable } from "typeorm"
     import { ExOperation } from "../Types/Operation"
+import { Users } from "./Users";
 
     // iniciar implementação dos use cases 
 
@@ -12,8 +13,10 @@
         private _date: string ;
         private _value: number = 0; // Inicializa com um valor padrão
         private _description: string = '';
+        private _participants!: Users[]
 
-        constructor (operation: ExOperation, date: string, value: number, description: string, owner_id: string, id?: string) {
+
+        constructor (operation: ExOperation, date: string, value: number, description: string, owner_id: string, participants: Users[], id?: string) {
             
             if (!id) {
                 this._id = uuid()
@@ -27,7 +30,8 @@
             this._date = date
             this._owner_id = owner_id
             this._description = description
-        }
+            this._participants = participants
+        } 
         
         @PrimaryColumn("uuid")
         public get id() { return this._id }
@@ -52,4 +56,10 @@
         @Column()
         public get description(): string {return this._description}
         public set description(description: string) { this._description = description }
+
+        @ManyToMany(() => Users, user => user.expenses)
+        @JoinTable({ name: "expense_participants", joinColumn: { name: "expense_id" }, inverseJoinColumn: { name: "user_id" } })
+        public get participants(): Users[] { return this._participants };
+        public set participants(participants: Users[]) { this._participants = participants }
+
     }

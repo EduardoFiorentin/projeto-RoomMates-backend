@@ -1,9 +1,9 @@
 import { Request, Response } from "express"
 import { ErrorHandler } from "../../../utils/ErrorHandler"
-import { GetExpenseByUserUseCase } from "./GetExpenseByUserUseCase"
 import { JwtService } from "../../../services/JwtService/JwtService"
 import { describe } from "node:test"
 import { Users } from "../../../entity/Users"
+import { GetExpensesByOwnerIdUseCase } from "./GetExpensesByOwnerIdUseCase"
 
 interface IExpenseResponse {
     id: string,
@@ -21,17 +21,18 @@ interface IUserResume {
     login: string
 }
 
-export class GetExpenseByUserController {
+export class GetExpenseByOwnerIdController {
     constructor(
-        private getExpenseByUserUseCase: GetExpenseByUserUseCase
+        private getExpenseByOwnerIdUseCase: GetExpensesByOwnerIdUseCase
     ){}
 
     async handle(req: Request, res: Response) {
         try {
             
+            const { owner_id } = req.body
             const token = req.headers['authorization'] || ''
 
-            const expenses = await this.getExpenseByUserUseCase.execute(token)
+            const expenses = await this.getExpenseByOwnerIdUseCase.execute(owner_id, token)
 
             if (expenses != null) {
                 let format_expenses: IExpenseResponse[] = []

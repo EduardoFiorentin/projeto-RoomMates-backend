@@ -1,61 +1,17 @@
 import { uuid } from "uuidv4"
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Entity, Column, PrimaryColumn, ManyToMany } from "typeorm";
+import { Expenses } from "./Expense";
 
-// @Entity() 
-// export class Users {
-
-//     @PrimaryColumn("uuid")
-//     readonly id: string;
-     
-//     @Column()
-//     name: string;
-
-//     @Column()
-//     login: string;
-
-//     @Column()
-//     password: string;
-
-//     constructor(name: string, login: string, password: string, id?: string) {
-//         this.name = name
-//         this.login = login
-//         this.password = password
-            
-//         if (!id) {
-//             this.id = uuid() 
-//         } else this.id = id
-//     }
-
-//     public getName(): string {
-//         return this.name
-//     }
-
-//     public getId(): string {
-//         return this.id
-//     }
-
-//     public getLogin(): string {
-//         return this.login
-//     }
-
-//     // validar senha do usuário
-//     public validatePass(password: string): boolean {
-//         return password === this.password
-//     }
-// }
 
 @Entity() 
 export class Users {
     
     private _id: string;
-     
     private _name: string;
-
     private _login: string;
-
     private _password: string;
-
     private _room_id: string|null;
+    private _expenses!: Expenses[];
 
     constructor(name: string, login: string, password: string, room_id: string|null, id?: string) {
         this._name = name
@@ -112,6 +68,10 @@ export class Users {
     public set room_id(room_id: string|null) {
         this._room_id = room_id
     }
+
+    @ManyToMany(() => Expenses, expense => expense.participants)
+    public get expenses(): Expenses[] {return this._expenses};
+    public set expenses(expenses: Expenses[]) {this._expenses = expenses}
 
     // validar senha do usuário
     public validatePass(password: string): boolean {

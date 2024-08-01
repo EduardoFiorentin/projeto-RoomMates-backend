@@ -40,7 +40,7 @@ export class PostgresExpenseRepository implements IExpenseRepository {
 
     public async findExpenseById(id: string): Promise<Expenses|null> {
         try {
-            const expense: Expenses | null = await this.expenseRepository.findOneBy({id})
+            const expense: Expenses | null = await this.expenseRepository.findOne({where: {id}, relations: ["participants"]})
             return expense
         }
         catch(err) {
@@ -69,7 +69,7 @@ export class PostgresExpenseRepository implements IExpenseRepository {
 
     async getExpensesByUser(userId: string): Promise<Expenses[]|null> {
         try {
-            const expenses = await this.expenseRepository.find({where: {owner_id: userId}})
+            const expenses = await this.expenseRepository.find({where: {owner_id: userId}, relations: ["participants"]})
             return expenses
         }
         catch(err) {
@@ -97,7 +97,7 @@ export class PostgresExpenseRepository implements IExpenseRepository {
 
     async getExpensesByOwnerId(owner_id: string): Promise<Expenses[]> {
         try {
-            const expenses = this.expenseRepository.find({where: {owner_id}})
+            const expenses = this.expenseRepository.find({where: {owner_id}, relations: ["participants"]})
             return expenses
         }
         catch(err) {

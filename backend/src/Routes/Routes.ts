@@ -10,6 +10,8 @@ import { deleteExpenseController } from "../useCases/ExpenseUseCases/DeleteExpen
 import { getRoomByOwnerIdController } from "../useCases/RoomUseCases/GetRoomByOwnerIdUseCase";
 import { createRoomController } from "../useCases/RoomUseCases/CreateRoomUseCase";
 import { registerUserToRoomController } from "../useCases/RoomUseCases/RegisterUserToRoomUseCase";
+import { getUsersByIdUseCase } from "../useCases/UserUseCases/GetUsersByIdUseCase";
+import { getExpensesByOwnerIdController } from "../useCases/ExpenseUseCases/GetExpensesByOwnerId";
 
 // 500 - internal error
 // 404 - not found
@@ -37,7 +39,21 @@ export class Routes {
             authUserController.handle(req, res)
         })
 
-       
+       // testes 
+       app.get("/test", async (req: Request, res: Response) => {
+
+            // const expense = await expensesRepository.findExpenseById("e9cd8f6e-b1d7-419a-a39c-f96d86dd45e9")
+            // console.log(expense)
+
+            const users = await getUsersByIdUseCase.execute([
+                "2a879889-38f8-457f-a254-d962dcdb1c20",
+                "3be56118-651c-4d00-9da7-b0f347f55330"
+            ])
+
+            console.log(users)
+    
+            return res.status(200).json(users)
+       })
     }
 
     static declareExpenseRoutes(app: Application) {
@@ -49,6 +65,9 @@ export class Routes {
         })
         app.delete("/expense/:id", (req: Request, res: Response) => {
             deleteExpenseController.handle(req, res)
+        })
+        app.get("/expense/ownerId", (req: Request, res: Response) => {
+            getExpensesByOwnerIdController.handle(req, res)
         })
 
         // app.get("/room", (req: Request, res: Response) => {

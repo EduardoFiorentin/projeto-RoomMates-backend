@@ -6,5 +6,6 @@ export interface ICreateExpenseRequertPattern {
     operation: ExOperation,
     date: Date,
     value: number,
-    description: string
+    description: string,
+    participants: string[]
 }

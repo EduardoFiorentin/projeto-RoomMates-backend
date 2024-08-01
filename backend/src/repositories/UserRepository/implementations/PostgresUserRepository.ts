@@ -1,4 +1,4 @@
-import { DataSource, QueryFailedError, Repository } from "typeorm";
+import { DataSource, In, QueryFailedError, Repository } from "typeorm";
 import { Users } from "../../../entity/Users";
 import { InternalError } from "../../../exceptions/InternalError";
 import { PostgresDatabase } from "../../../infrastructure/PostgresDatabase/PostgresDatabase";
@@ -119,5 +119,15 @@ export class PostgresUserRepository implements IUsersRepository {
             else 
                 throw new InternalError("Não foi possível realizar alterações! Tente novamente mais tarde!")
         }   
+    }
+
+    async findUsersById(ids: string[]): Promise<Users[]> {
+        try {
+            const users = await this.userRepository.find({where: {id: In(ids)}});
+            return users
+        }
+        catch(err) {
+            throw err
+        }
     }
 }

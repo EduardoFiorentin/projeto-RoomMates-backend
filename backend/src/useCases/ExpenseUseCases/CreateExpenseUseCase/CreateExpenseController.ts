@@ -14,7 +14,8 @@ export class CreateExpenseController {
                 operation,
                 date,
                 value,
-                description
+                description,
+                participants
             } = req.body
             const token = req.headers['authorization'] || ''
 
@@ -24,7 +25,8 @@ export class CreateExpenseController {
                 operation,
                 date,
                 value,
-                description
+                description,
+                participants
             })
 
             return res.status(201).json({
@@ -36,7 +38,8 @@ export class CreateExpenseController {
                     operation: new_expense.operation,
                     date: new_expense.date,
                     value: new_expense.value,
-                    description: new_expense.description
+                    description: new_expense.description,
+                    participants: new_expense.participants
                 }
             })
         }
