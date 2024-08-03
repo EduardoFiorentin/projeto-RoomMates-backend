@@ -68,11 +68,11 @@ export class Routes {
         })
         app.get("/expense/ownerId", (req: Request, res: Response) => {
             getExpensesByOwnerIdController.handle(req, res)
-        })
+        }) 
 
         // app.get("/room", (req: Request, res: Response) => {
         //     getRoomByOwnerIdController.handle(req, res)
-        // })
+        // })  
     }
 
     static declareRoomRoutes(app: Application) {
@@ -85,3 +85,4 @@ export class Routes {
         }) 
     }
 }
+  

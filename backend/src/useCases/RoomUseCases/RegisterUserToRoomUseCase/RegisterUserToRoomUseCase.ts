@@ -46,7 +46,7 @@ export class RegisterUserToRoomUseCase {
             if (room == null) throw new UnauthorizedOperationError(`Room com nome '${room_name}' não encontrado!`)
             
             // setar o room para o usuário que pediu 
-            await this.setUserRoomUseCase.execute(user_id, room.id)
+            await this.setUserRoomUseCase.execute(user_id, room.id) 
 
             // atualizar numero de membros 
             await this.updateRoomMembersNumUseCase.execute(room.id, (room.members_num + 1).toString())

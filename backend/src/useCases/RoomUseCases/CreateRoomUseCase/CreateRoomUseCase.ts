@@ -31,7 +31,7 @@ export class CreateRoomUseCase {
 
             if (user.room_id) throw new UnauthorizedOperationError("Usuário já possui ou participa de um quarto")
             
-            const members_num = 1
+            const members_num = 1 
 
             // definir o usuário que criou como pertencente ao room
             

@@ -18,7 +18,7 @@ export class RegisterUserToRoomController {
             return res.status(201).json({
                 statusCode: 201,
                 message: "Usuário registrado com sucesso!",
-                data: null
+                data: null 
             })
 
         }
@@ -27,9 +27,9 @@ export class RegisterUserToRoomController {
 
             return res.status(errorHandle.statusCode).json({
                 statusCode: errorHandle.statusCode,
-                message: errorHandle.message,
-                data: []
+                message: errorHandle.message, 
+                data: [] 
             })
-        }
+        } 
     }
 }

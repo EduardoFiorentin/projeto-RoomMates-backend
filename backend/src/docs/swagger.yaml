@@ -182,6 +182,28 @@ paths:
           description: Token JWT inválido
         '500':
           description: Um erro inesperado ocorreu! Tente novamente mais tarde!
+
+  /expense/ownerId: 
+    get:
+      summary: Retorna gastos registrados pelo owner fornecido no body
+      description: Retorna os gastos do usuário. Identifica o usuário através da propriedade owner_id no corpo da requisição
+      tags:
+        - Expense
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Operação realizada com sucesso!
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/getExpensesByUserResponse201'
+        '401':
+          description: Token JWT inválido
+        '500':
+          description: Um erro inesperado ocorreu! Tente novamente mais tarde!
+
   /room:
     post: 
       summary: Cria um novo Room
@@ -203,26 +225,36 @@ paths:
         '400':
           description: Todas as informações são obrigatorias
         '401':
-          description: Token JWT inválido
-          content: 
-            application/json:
-              schema:
-                type: object 
-                properties:
-                  message: 
-                    type: string
-                  statusCode: 
-                    type: number
-              examples: 
-                example1:
-                  summary: Token JWT inválido
-                  
-                example2:
-                  summary: Usuário já possui ou participa de um quarto
-
+          description: Token JWT inválido </br> Usuário já possui ou participa de um quarto </br> Usuário não encontrado! </br> Room com nome <nome> não encontrado!
+ 
         '500':
           description: Um erro inesperado ocorreu! Tente novamente mais tarde!
     
+  /room/registre: 
+    post: 
+      summary: Registra um usuário a um quarto. 
+      description: Registra um usuário a um room. Não há limites para quantade de participantes.  
+      tags: 
+        - Room
+      security: 
+        - bearerAuth: []
+      responses: 
+        '201':
+          description: 'Usuário registrado com sucesso!'
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                $ref: '#/components/schemas/GenericResponse'
+        
+        '400':
+          description: Todas as informações são obrigatorias
+
+        '401':
+          description: Token JWT inválido </br> Usuário não encontrado! </br> Usuário já possui ou participa de um quarto
+
+        '500':
+          description: Um erro inesperado ocorreu! Tente novamente mais tarde!
     
     
 components:
@@ -313,7 +345,27 @@ components:
           type: number
         description:
           type: string
+        participants: 
+          type: array
+          items: 
+            type: object
+            properties: 
+              id:
+                type: string
+              name: 
+                type: string
+              login: 
+                type: string
     
+    GenericResponse: 
+      type: object
+      properties: 
+        statusCode: 
+          type: number
+        message: 
+          type: number
+        data: 
+          type: null
     
   securitySchemes:
     bearerAuth:
