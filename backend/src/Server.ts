@@ -3,6 +3,7 @@ import { Routes } from './Routes/Routes';
 import swaggerUi from 'swagger-ui-express'
 import YAML from 'yamljs';
 import path from 'path';
+import cors from 'cors'
 
 export class Server {
     private app: Application;
@@ -17,6 +18,13 @@ export class Server {
     }
 
     private config(): void {
+        const corsOptions = {
+            origin: '*', // Permite qualquer origem
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Permite esses métodos HTTP
+            allowedHeaders: 'Content-Type, Authorization', // Permite esses cabeçalhos
+        };
+
+        this.app.use(cors(corsOptions))
         this.app.use(express.json());  
         
         const swagerDocs = YAML.load(path.join(__dirname, 'docs/swagger.yaml'))
