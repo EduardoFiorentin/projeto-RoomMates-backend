@@ -4,6 +4,7 @@ import { GetExpenseByUserUseCase } from "./GetExpenseByUserUseCase"
 import { JwtService } from "../../../services/JwtService/JwtService"
 import { describe } from "node:test"
 import { Users } from "../../../entity/Users"
+import { Expenses } from "../../../entity/Expense"
 
 interface IExpenseResponse {
     id: string,
@@ -29,12 +30,16 @@ export class GetExpenseByUserController {
     async handle(req: Request, res: Response) {
         try {
             
-            const token = req.headers['authorization'] || ''
+            const token = req.headers['authorization'] || ''    
 
-            const expenses = await this.getExpenseByUserUseCase.execute(token)
+            const expenses = await this.getExpenseByUserUseCase.execute(token) 
+            // console.log("Token: ", token)
+            
+            // const expenses: Expenses[] = [] 
 
             if (expenses != null) {
                 let format_expenses: IExpenseResponse[] = []
+                console.log("Expenses: ", expenses)
                 expenses.map((item) => {
                     let participants: IUserResume[] = []
                     item.participants.map(part => participants.push({

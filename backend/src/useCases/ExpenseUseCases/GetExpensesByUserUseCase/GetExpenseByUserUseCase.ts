@@ -11,6 +11,8 @@ export class GetExpenseByUserUseCase {
     
     async execute(token: string): Promise<Expenses[]|null> {       
         try {
+
+            console.log("Token: ", token)
             if (token == '' || !JwtService.getInstance().validateToken(token)) throw new UnauthorizedOperationError("Token JWT inválido")
             
             const jwtPayload = JwtService.getInstance().getTokenInfo(token)
